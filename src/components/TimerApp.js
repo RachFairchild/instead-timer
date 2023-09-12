@@ -7,7 +7,11 @@ function TimerApp() {
   const [timerMinutes, setTimerMinutes] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [isTimerCompleted, setIsTimerCompleted] = useState(false);
+
+
   const [isTimerPaused, setIsTimerPaused] = useState(false);
+  const [pausedMinutes, setPausedMinutes] = useState(0); // Store paused minutes
+  const [pausedProgress, setPausedProgress] = useState(0); // Store paused progress
 
   const handleMinutesChange = (newMinutes) => {
     setTimerMinutes(newMinutes);
@@ -22,6 +26,10 @@ function TimerApp() {
   const pauseTimer = () => {
     setIsTimerPaused(true);
     setIsTimerRunning(false);
+
+    setPausedMinutes(timerMinutes); // Store current time when pausing
+    // setPausedProgress(pausedMinutes / timerMinutes); // Store current progress when pausing
+    setPausedProgress((timerMinutes - pausedMinutes) / timerMinutes * 100); // Calculate paused progress
   };
 
   const resetTimer = () => {
@@ -35,24 +43,16 @@ function TimerApp() {
     setTimerMinutes(0);
   };
 
-  // useEffect(() => {
-  //   let interval;
-  //   if (isTimerRunning && !isTimerPaused) {
-  //     interval = setInterval(() => {
-  //       setTimerMinutes((prevMinutes) => prevMinutes - 1);
-  //     }, 1000);
-  //   } else {
-  //     clearInterval(interval);
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [isTimerRunning, isTimerPaused]);
-
   return (
     <div className="App">
       <h1>Timer App</h1>
-      {!isTimerRunning && !isTimerCompleted && (
+
+      {/* Timer isn't running, timer isn't completed, timer isn't paused */}
+      {!isTimerRunning && !isTimerCompleted && !isTimerPaused && (
         <TimerInput onMinutesChange={handleMinutesChange} />
       )}
+
+      {/* Timer is completed */}
       {isTimerCompleted ? (
         <>
           <p>Timer Completed!</p>
@@ -62,11 +62,18 @@ function TimerApp() {
             className="custom-button"
           />
         </>
+      // Timer ISN'T completed
       ) : (
         <>
+          {/* IF the timer is running but not complete... */}
           {isTimerRunning ? (
             <>
-              <Timer initialMinutes={timerMinutes} onTimerComplete={resetTimer} />
+              <Timer 
+                initialMinutes={timerMinutes} 
+                onTimerComplete={resetTimer}
+                pausedMinutes={pausedMinutes} // Pass paused minutes
+                pausedProgress={pausedProgress} // Pass paused progress
+              />
               <CustomButton
                 label="Pause Timer"
                 onClick={pauseTimer}
@@ -79,12 +86,32 @@ function TimerApp() {
               />
             </>
           ) : (
-            <CustomButton
-              label="Start Timer"
-              onClick={startTimer}
-              className="custom-button"
-              disabled={timerMinutes <= 0}
-            />
+            // If timer is not running but also not complete...
+            <>
+              {!isTimerRunning && !isTimerCompleted && isTimerPaused && (
+                <>
+                  <Timer 
+                    initialMinutes={pausedMinutes} 
+                    onTimerComplete={resetTimer}
+                    pausedMinutes={pausedMinutes} // Pass paused minutes
+                    pausedProgress={pausedProgress} // Pass paused progress 
+                  />
+                  <p>Timer paused!</p>
+                  <CustomButton
+                    label="Restart Timer"
+                    onClick={restartTimer}
+                    className="custom-button"
+                    disabled={timerMinutes <= 0}
+                  />
+                </>
+              )}
+              <CustomButton
+                label="Start Timer"
+                onClick={startTimer}
+                className="custom-button"
+                disabled={timerMinutes <= 0}
+              />
+            </>
           )}
         </>
       )}

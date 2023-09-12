@@ -4,7 +4,7 @@
   background-color: #ccc;
   border-radius: 4px;
   margin: 20px 0;
-  overflow: hidden; /* Ensure the progress bar doesn't overflow its container */
+  overflow: hidden;
   position: relative;
 
   /* Add a soft glow using box-shadow */
@@ -17,7 +17,7 @@
   border-radius: 4px;
   transition: width 1s linear; /* Smooth and consistent transition */
 
-  /* Use a gradient background for the progress bar */
+  /* gradient background for the progress bar */
   background: linear-gradient(90deg, #3498db, #9b59b6);
 }
 
