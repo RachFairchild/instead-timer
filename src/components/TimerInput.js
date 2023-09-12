@@ -10,7 +10,7 @@ function TimerInput({ onMinutesChange }) {
   };
 
   return (
-    <div>
+    <div className="timer-input">
       <label htmlFor="timer-input">Set Timer (minutes): </label>
       <input
         type="number"

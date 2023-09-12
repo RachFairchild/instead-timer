@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 function Timer({ initialMinutes, onTimerComplete }) {
   const [minutes, setMinutes] = useState(initialMinutes);
   const [seconds, setSeconds] = useState(0);
+  const [progressPercentage, setProgressPercentage] = useState(100);
 
   useEffect(() => {
     let timer;
@@ -19,19 +20,31 @@ function Timer({ initialMinutes, onTimerComplete }) {
         } else {
           setSeconds(seconds - 1);
         }
+
+        // Calculate progress percentage
+        const totalSeconds = initialMinutes * 60;
+        const remainingSeconds = minutes * 60 + seconds;
+        const percentage = (remainingSeconds / totalSeconds) * 100;
+        setProgressPercentage(percentage);
       }, 1000);
     }
 
     return () => {
       clearInterval(timer);
     };
-  }, [minutes, seconds, onTimerComplete]);
+  }, [minutes, seconds, initialMinutes, onTimerComplete]);
 
   return (
     <div>
-        <p>
-          Time Remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-        </p>
+      <div className="progress-bar-container">
+        <div
+          className="progress-bar"
+          style={{ width: `${progressPercentage}%` }}
+        ></div>
+      </div>
+      <p>
+        Time Remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+      </p>
     </div>
   );
 }

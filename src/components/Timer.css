@@ -1,0 +1,21 @@
+.progress-bar-container {
+  width: 100%; /* Adjusted to 50% */
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 4px;
+  margin-top: 20px; /* Set margin to 20px for all sides */
+  overflow: hidden; /* Ensure the progress bar doesn't overflow its container */
+  position: relative;
+
+  /* Add a soft glow using box-shadow */
+  box-shadow: 0px 0px 8px rgba(52, 152, 219, 0.7); /* Adjust the values for the desired glow effect */
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s linear; /* Smooth and consistent transition */
+
+  /* Use a gradient background for the progress bar */
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+}
