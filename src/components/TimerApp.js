@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TimerInput from './TimerInput';
 import CustomButton from './CustomButton';
 import Timer from './Timer';
@@ -7,6 +7,7 @@ function TimerApp() {
   const [timerMinutes, setTimerMinutes] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [isTimerCompleted, setIsTimerCompleted] = useState(false);
+  const [isTimerPaused, setIsTimerPaused] = useState(false);
 
   const handleMinutesChange = (newMinutes) => {
     setTimerMinutes(newMinutes);
@@ -15,6 +16,12 @@ function TimerApp() {
   const startTimer = () => {
     setIsTimerRunning(true);
     setIsTimerCompleted(false);
+    setIsTimerPaused(false); // Reset the pause state
+  };
+
+  const pauseTimer = () => {
+    setIsTimerPaused(true);
+    setIsTimerRunning(false);
   };
 
   const resetTimer = () => {
@@ -24,9 +31,21 @@ function TimerApp() {
 
   const restartTimer = () => {
     setIsTimerCompleted(false);
+    setIsTimerPaused(false);
     setTimerMinutes(0);
-    // setIsTimerRunning(false);
   };
+
+  // useEffect(() => {
+  //   let interval;
+  //   if (isTimerRunning && !isTimerPaused) {
+  //     interval = setInterval(() => {
+  //       setTimerMinutes((prevMinutes) => prevMinutes - 1);
+  //     }, 1000);
+  //   } else {
+  //     clearInterval(interval);
+  //   }
+  //   return () => clearInterval(interval);
+  // }, [isTimerRunning, isTimerPaused]);
 
   return (
     <div className="App">
@@ -46,7 +65,19 @@ function TimerApp() {
       ) : (
         <>
           {isTimerRunning ? (
-            <Timer initialMinutes={timerMinutes} onTimerComplete={resetTimer} />
+            <>
+              <Timer initialMinutes={timerMinutes} onTimerComplete={resetTimer} />
+              <CustomButton
+                label="Pause Timer"
+                onClick={pauseTimer}
+                className="custom-button"
+              />
+              <CustomButton
+                label="Reset Timer"
+                onClick={resetTimer}
+                className="custom-button"
+              />
+            </>
           ) : (
             <CustomButton
               label="Start Timer"

@@ -1,9 +1,9 @@
 .progress-bar-container {
-  width: 100%; /* Adjusted to 50% */
+  width: 600px;
   height: 20px;
   background-color: #ccc;
   border-radius: 4px;
-  margin-top: 20px; /* Set margin to 20px for all sides */
+  margin: 20px 0;
   overflow: hidden; /* Ensure the progress bar doesn't overflow its container */
   position: relative;
 
@@ -13,9 +13,14 @@
 
 .progress-bar {
   height: 100%;
+  width: 100%;
   border-radius: 4px;
   transition: width 1s linear; /* Smooth and consistent transition */
 
   /* Use a gradient background for the progress bar */
   background: linear-gradient(90deg, #3498db, #9b59b6);
+}
+
+p {
+  margin: 40px 0;
 }

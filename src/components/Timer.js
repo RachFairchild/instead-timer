@@ -50,3 +50,52 @@ function Timer({ initialMinutes, onTimerComplete }) {
 }
 
 export default Timer;
+
+
+// import React, { useState, useEffect } from 'react';
+
+// function Timer({ initialMinutes, onTimerComplete, progress }) {
+//   const [minutes, setMinutes] = useState(initialMinutes);
+//   const [seconds, setSeconds] = useState(0);
+
+//   useEffect(() => {
+//     let interval;
+
+//     if (minutes === 0 && seconds === 0) {
+//       clearInterval(interval);
+//       onTimerComplete();
+//     } else {
+//       interval = setInterval(() => {
+//         if (seconds === 0) {
+//           setMinutes((prevMinutes) => prevMinutes - 1);
+//           setSeconds(59);
+//         } else {
+//           setSeconds((prevSeconds) => prevSeconds - 1);
+//         }
+//       }, 1000);
+//     }
+
+//     return () => clearInterval(interval);
+//   }, [minutes, seconds, onTimerComplete]);
+
+//   // Calculate the width of the progress bar based on the progress prop
+//   const progressBarWidth = `${progress * 100}%`;
+
+//   return (
+//     <div className="timer">
+//       <div className="progress-bar-container">
+//         <div
+//           className="progress-bar"
+//           style={{ width: progressBarWidth }}
+//         ></div>
+//       </div>
+//       <div className="time">
+//         <span>{String(minutes).padStart(2, '0')}</span>:
+//         <span>{String(seconds).padStart(2, '0')}</span>
+//       </div>
+//       <div className="progress-bar" style={{ width: progressBarWidth }}></div>
+//     </div>
+//   );
+// }
+
+// export default Timer;

@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+/* Your CSS file or style section */
+body {
+  /* Create a linear gradient background with the specified colors */
+  background: linear-gradient(135deg, #35478C, #6B5B95, #8B96A3);
+  /* Add vendor prefixes for wider browser compatibility */
+  background: -webkit-linear-gradient(135deg, #35478C, #6B5B95, #8B96A3);
+  background: -moz-linear-gradient(135deg, #35478C, #6B5B95, #8B96A3);
+  background: -o-linear-gradient(135deg, #35478C, #6B5B95, #8B96A3);
+
+  /* You can adjust these properties to control the size and positioning of the gradient */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
